@@ -33,13 +33,6 @@ body {
   margin: 0;
   width: 100%;
 }
-a {
-  color: white;
-  text-decoration: none;
-}
-a:hover {
-  color: black;
-}
 .header-wrap {
   padding: 5px;
   position: absolute;
@@ -70,11 +63,25 @@ a:hover {
   display: inline;
   padding: 10px;
 }
+.navbar-wrap a {
+  color: white;
+  text-decoration: none;
+}
+.navbar-wrap a:hover {
+  color: black;
+}
 .main-wrap {
   box-sizing: border-box;
   width: 97.91666667%;
   margin-left: 1.04166667%;
   margin-right: 1.04166667%;
+}
+.main-wrap a {
+  color: #026FCA;
+  text-decoration: none;
+}
+.main-wrap a:hover {
+  color: black;
 }
 .andy-image {
   box-sizing: border-box;
@@ -101,4 +108,72 @@ a:hover {
   color: white;
   margin-bottom: -20px;
   border-top: 2px solid black;
+}
+.comment {
+  width: 60%;
+  border: 1px solid gray;
+  min-height: 100px;
+  padding: 20px;
+  margin: 10px auto;
+  position: relative;
+}
+.vcard.author {
+  border-bottom: 1px solid lightgray;
+  padding: 5px;
+}
+.entry-content {
+  margin: 20px;
+}
+.leave-comment {
+  width: 60%;
+  min-height: 100px;
+  padding: 20px;
+  margin: 10px auto;
+}
+.compose-comment {
+  padding: 20px;
+  border-bottom: 1px dashed gray;
+}
+.comment-text {
+  width: 100%;
+  height: 250px;
+  padding: 5px;
+  font-size: 16px;
+}
+.comment-text-large {
+  width: 60%;
+  height: 300px;
+  padding: 5px;
+  font-size: 16px;
+  margin: 10px auto;
+  display: block;
+}
+.comment-email {
+  margin-top: 10px;
+  width: 25%;
+  padding: 5px;
+  font-size: 16px;
+}
+.comment-post {
+  margin: 10px auto;
+  display: block;
+  padding: 5px;
+  font-size: 16px;
+}
+.thread-content {
+  width: 60%;
+  margin: 10px auto;
+  border-bottom: 1px solid black;
+  margin-bottom: 20px;
+}
+.center {
+  text-align: center;
+}
+.comment-actions {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+.comment-actions p {
+  display: inline;
 }

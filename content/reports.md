@@ -58,6 +58,40 @@ Sen har jag tänkt mycket på hur kod och databasstrukturen skulle kunna se ut f
 
 ### Kmom02
 
+#### Vilka tidigare erfarenheter har du av MVC? Använde du någon speciell källa för att läsa på om MVC? Kan du med egna ord förklara någon fördel med kontroller/modell-begreppet, så som du ser på det?
+
+Vi har kommit i kontakt med det lite i tidigare kurser som oopython och webapp men jag tänkte inte mycket på själva begreppet just då. Efter att ha läst artiklen på dbwebb och hört mos prata om det på föreläsningen så kan jag säga att jag förstår vad vi gjorde då och varför.
+
+Främst ser jag att det blir en tydlig uppdelning av koden och mer ordning vilket är en stor fördel - jag gillar när min kod är snygg och bra strukturerad även om jag också kan skriva väldigt rörig kod när jag är för lat för att dela upp den.
+
+Under uppgiften gjorde jag som med remserver - jag hade först ingen kontrollerklass och det var mer kod i routerna. Sen gjorde jag en kontrollerklass och ändrade om koden så den kan fungera som en fristående modul. Fick då se skillnaden på min egen kod och få en bättre uppfattning om hur mycket bättre det blir.
+
+En annan fördel är ju också att koden blir mer testbar. Om man har en massa kod i routerna blir den svår att testa - men om den ligger i klasser blir det mycket enklare.
+
+#### Kom du fram till vad begreppet SOLID innebar och vilka källor använde du? Kan du förklara SOLID på ett par rader med dina egna ord?
+
+Nja, det kändes lite flummigt men så som jag förstod det, handlar det om ett tankesätt som programmerare ska ha när de skapar OOP kod. Begreppet är en akronym som t.ex. "KISS" - och det står för följande:
+
+S - Single responsibility - en klass ska bara göra en sak och inte ha mer än en anledning att ändras.
+O - Open/closed principle - klasser osv ska vara öppna för utbyggnad men stängda för modifiering. T.ex. man ska kunna lägga till nya funktioner men inte modifiera existerande.
+L - Liskov substitution principle - Ett objekt av en klass ska kunna ersättas av dess bestpndsdelar utan att det blir fel i programmet.
+I - Interface segregation principle - Det är bättre att göra fler enkla interfaces än få stora för att undvika att skapa onödiga beroenden.
+D - Dependency inversion principle - Klasser ska inte vara beroende av andra klasser. De kopplas genom ett gränssnitt mellan klasserna.
+
+#### Gick arbetet med REM servern bra och du lyckades integrera den i din me-sida?
+
+Ja, det gick bra och relativt snabbt. Hade bara lite problem med sessionen vilket skapade problem med API'et. Det uppståd då jag hade implementerat mitt kommentarssystem, eftersom sessionen redan var startad när man skickade en request mot API'et. Tog bort session start i remserver-klassen och det fungerade igen.
+
+Annars gjorde övningen det väldigt lätt att integrera remservern i me-sidan.
+
+#### Berätta om arbetet med din kommentarsmodul, hur långt har du kommit och hur tänker du?
+
+Jag hade tänkt göra databasen direkt men blev att jag använde sessionen till att börja med. Min struktur blev två vyer. Den första är en sida där man lägger till kommentarer - för varje kommentar finns länkar för att redigera och ta bort. Jag valde att kommentarer skrivs i bbcode istället för markdown då det kändes lite mer intressant och mer vanligt på t.ex. forum. Jag valde också att inte ta med bilder från gravatar just nu då det inte riktigt passar in i vad jag har gjort. Bygger jag vidare mot forum-stilen kan jag integrera det senare, men för nu har jag hoppat det.
+
+Min andra vy är till för när man redigerar kommentarer. Min kontroller ger direktiv till modellen och därefter skickas data till vyn via kontrollern. Jag har alltså försökt lägga mycket fokus på MVC-arkitekturen.
+
+Jag gjorde också en funktion för att lägga till hela kommentars-sektionen. Om det är bra eller dåligt återstår att se...
+
 ### Kmom03
 
 ### Kmom04

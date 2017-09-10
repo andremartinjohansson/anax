@@ -28,7 +28,8 @@ $app->router->always(function () use ($app) {
 
     // Render a standard page using layout
     $app->view->add("default1/article", [
-        "content" => $content->text
+        "content" => $content->text,
+        "frontmatter" => $content->frontmatter
     ]);
     $app->renderPage($content->frontmatter);
 });

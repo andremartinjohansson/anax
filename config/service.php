@@ -35,5 +35,22 @@ $app->url->setDefaultsFromConfiguration();
 $app->view->setApp($app);
 $app->view->configure("view.php");
 
+// Add the REM server
+$app->rem           = new \Anax\RemServer\RemServer();
+$app->remController = new \Anax\RemServer\RemServerController();
+
+// Init REM Server
+$app->rem->configure("remserver.php");
+$app->rem->inject(["session" => $app->session]);
+
+// Init controller for the REM Server
+$app->remController->setApp($app);
+
+// Comments
+$app->comments = new \Anax\Comments\Comments();
+$app->commentsController = new \Anax\Comments\CommentsController();
+
+$app->commentsController->setApp($app);
+
 // Return the populated $app
 return $app;
