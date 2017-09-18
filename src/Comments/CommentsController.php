@@ -2,41 +2,57 @@
 
 namespace Anax\Comments;
 
-use \Anax\Common\AppInjectableInterface;
-use \Anax\Common\AppInjectableTrait;
+use \Anax\DI\InjectionAwareInterface;
+use \Anax\DI\InjectionAwareTrait;
 
-class CommentsController implements AppInjectableInterface
+class CommentsController implements InjectionAwareInterface
 {
-    use AppInjectableTrait;
+    use InjectionAwareTrait;
 
-    public function add($comment)
+    public function add()
     {
-        $this->app->comments->addComment($comment);
-        $this->app->redirect("comments");
+        $this->di->get("comments")->addComment($_POST);
+        $this->di->get("response")->redirect("comments");
     }
 
-    public function delete($id)
+    public function delete()
     {
-        $this->app->comments->deleteComment($id);
-        $this->app->redirect("comments");
+        $this->di->get("comments")->deleteComment($_GET['id']);
+        $this->di->get("response")->redirect("comments");
     }
 
-    public function edit($id, $text)
+    public function edit()
     {
-        $this->app->comments->editComment($id, $text);
-        $this->app->redirect("comments");
+        $this->di->get("comments")->editComment($_POST['id'], $_POST['comment']);
+        $this->di->get("response")->redirect("comments");
     }
 
     public function get($id)
     {
-        return $this->app->comments->getComment($id);
+        return $this->di->get("comments")->getComment($id);
     }
 
     public function addCommentSection()
     {
-        $url = $this->app->url->create('post_comment');
-        $del = $this->app->url->create('delete_comment');
-        $edit = $this->app->url->create('preview');
-        $this->app->comments->commentSection($url, $del, $edit);
+        $url = $this->di->get("url")->create('post_comment');
+        $del = $this->di->get("url")->create('delete_comment');
+        $edit = $this->di->get("url")->create('preview');
+        $this->di->get("comments")->commentSection($url, $del, $edit);
+    }
+
+    public function renderMain()
+    {
+        $this->di->get("view")->add("comments");
+        $this->di->get("pageRender")->renderPage([
+            "title" => "Comments"
+        ]);
+    }
+
+    public function renderEdit()
+    {
+        $this->di->get("view")->add("edit_comment");
+        $this->di->get("pageRender")->renderPage([
+            "title" => "Edit Comment"
+        ]);
     }
 }

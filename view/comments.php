@@ -8,4 +8,4 @@
 
 </div>
 
-<?php $app->commentsController->addCommentSection(); ?>
+<?php $di->get("commentsController")->addCommentSection(); ?>

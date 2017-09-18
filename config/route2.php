@@ -17,6 +17,14 @@ return [
             "file" => __DIR__ . "/route2/debug.php",
         ],
         [
+            "mount" => "api",
+            "file" => __DIR__ . "/route2/remserver.php",
+        ],
+        [
+            "mount" => null,
+            "file" => __DIR__ . "/route2/comments.php",
+        ],
+        [
             // To read flat file content in Markdown from content/
             "mount" => null,
             "file" => __DIR__ . "/route2/flat-file-content.php",

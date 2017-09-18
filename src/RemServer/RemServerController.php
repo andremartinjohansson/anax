@@ -2,17 +2,17 @@
 
 namespace Anax\RemServer;
 
-use \Anax\Common\AppInjectableInterface;
-use \Anax\Common\AppInjectableTrait;
+use \Anax\DI\InjectionAwareInterface;
+use \Anax\DI\InjectionAwareTrait;
 
 /**
  * A controller for the REM Server.
  *
  * @SuppressWarnings(PHPMD.ExitExpression)
  */
-class RemServerController implements AppInjectableInterface
+class RemServerController implements InjectionAwareInterface
 {
-    use AppInjectableTrait;
+    use InjectionAwareTrait;
 
 
 
@@ -23,10 +23,13 @@ class RemServerController implements AppInjectableInterface
      */
     public function anyPrepare()
     {
-        // $this->app->session->start();
+        // $rem = $this->di->get("rem");
+        $session = $this->di->get("session");
 
-        if (!$this->app->rem->hasDataset()) {
-            $this->app->rem->init();
+        $session->start();
+
+        if (!$this->di->get("rem")->hasDataset()) {
+            $this->di->get("rem")->init();
         }
     }
 
@@ -39,8 +42,8 @@ class RemServerController implements AppInjectableInterface
      */
     public function anyInit()
     {
-        $this->app->rem->init();
-        $this->app->response->sendJson(["message" => "The session is initiated with the default dataset."]);
+        $this->di->get("rem")->init();
+        $this->di->get("response")->sendJson(["message" => "The session is initiated with the default dataset."]);
         exit;
     }
 
@@ -53,8 +56,8 @@ class RemServerController implements AppInjectableInterface
      */
     public function anyDestroy()
     {
-        $this->app->session->destroy();
-        $this->app->response->sendJson(["message" => "The session was destroyed."]);
+        $this->di->get("session")->destroy();
+        $this->di->get("response")->sendJson(["message" => "The session was destroyed."]);
         exit;
     }
 
@@ -69,9 +72,9 @@ class RemServerController implements AppInjectableInterface
      */
     public function getDataset($key)
     {
-        $dataset = $this->app->rem->getDataset($key);
-        $offset = $this->app->request->getGet("offset", 0);
-        $limit = $this->app->request->getGet("limit", 25);
+        $dataset = $this->di->get("rem")->getDataset($key);
+        $offset = $this->di->get("request")->getGet("offset", 0);
+        $limit = $this->di->get("request")->getGet("limit", 25);
         $res = [
             "data" => array_slice($dataset, $offset, $limit),
             "offset" => $offset,
@@ -79,7 +82,7 @@ class RemServerController implements AppInjectableInterface
             "total" => count($dataset)
         ];
 
-        $this->app->response->sendJson($res);
+        $this->di->get("response")->sendJson($res);
         exit;
     }
 
@@ -95,13 +98,13 @@ class RemServerController implements AppInjectableInterface
      */
     public function getItem($key, $itemId)
     {
-        $item = $this->app->rem->getItem($key, $itemId);
+        $item = $this->di->get("rem")->getItem($key, $itemId);
         if (!$item) {
-            $this->app->response->sendJson(["message" => "The item is not found."]);
+            $this->di->get("response")->sendJson(["message" => "The item is not found."]);
             exit;
         }
 
-        $this->app->response->sendJson($item);
+        $this->di->get("response")->sendJson($item);
         exit;
     }
 
@@ -117,11 +120,11 @@ class RemServerController implements AppInjectableInterface
      */
     public function postItem($key)
     {
-        $entry = $this->app->request->getBody();
+        $entry = $this->di->get("request")->getBody();
         $entry = json_decode($entry, true);
 
-        $item = $this->app->rem->addItem($key, $entry);
-        $this->app->response->sendJson($item);
+        $item = $this->di->get("rem")->addItem($key, $entry);
+        $this->di->get("response")->sendJson($item);
         exit;
     }
 
@@ -136,11 +139,11 @@ class RemServerController implements AppInjectableInterface
      */
     public function putItem($key, $itemId)
     {
-        $entry = $this->app->request->getBody();
+        $entry = $this->di->get("request")->getBody();
         $entry = json_decode($entry, true);
 
-        $item = $this->app->rem->upsertItem($key, $itemId, $entry);
-        $this->app->response->sendJson($item);
+        $item = $this->di->get("rem")->upsertItem($key, $itemId, $entry);
+        $this->di->get("response")->sendJson($item);
         exit;
     }
 
@@ -156,8 +159,8 @@ class RemServerController implements AppInjectableInterface
      */
     public function deleteItem($key, $itemId)
     {
-        $this->app->rem->deleteItem($key, $itemId);
-        $this->app->response->sendJson(null);
+        $this->di->get("rem")->deleteItem($key, $itemId);
+        $this->di->get("response")->sendJson(null);
         exit;
     }
 
@@ -170,7 +173,7 @@ class RemServerController implements AppInjectableInterface
      */
     public function anyUnsupported()
     {
-        $this->app->response->sendJson(["message" => "404. The api/ does not support that."], 404);
+        $this->di->get("response")->sendJson(["message" => "404. The api/ does not support that."], 404);
         exit;
     }
 }

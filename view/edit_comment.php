@@ -1,4 +1,4 @@
-<?php $text = $app->commentsController->get($_GET['id']); ?>
+<?php $text = $di->get("commentsController")->get($_GET['id']); ?>
 
 <h2 class="center">Edit Comment</h2>
 
