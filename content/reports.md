@@ -117,9 +117,43 @@ Jag avvaktar då det känns som att jag lika bra kan lägga full fokus på det i
 
 ### Allmänna kommentare kring din me-sida och dess kodstruktur?
 
-jag försöker lägga fokus på att hålla det så rent som möjligt överallt, och än så länge tycker jag det är hyfsat bra. Ska dock ta en titt på min klass för kommentarssystemet och se om jag kan göra några förbättringar där. Tanken är att jag ska följa SOLID så bra jag kan genom kursen. 
+jag försöker lägga fokus på att hålla det så rent som möjligt överallt, och än så länge tycker jag det är hyfsat bra. Ska dock ta en titt på min klass för kommentarssystemet och se om jag kan göra några förbättringar där. Tanken är att jag ska följa SOLID så bra jag kan genom kursen.
 
 ## Kmom04
+
+### Hur gick det att integrera formulärhantering och databashantering i ditt kommentarssystem?
+
+Det var inga större problem. Efter artiklarna och bok exemplet hade man hyfsad koll på hur man kunde göra. Det jag gjorde var att skapa en my klass som innehåller tabellen för databasen. Via controllern kan jag då koppla mig till databasen och lägga till, ta bort och redigera kommentarer.
+
+Jag integrera bara formulärhantering för administrativ hantering av användare, alltså där man kan göra crud på användare. Det gick dock bra då jag scaffoldade fram klasserna och vyerna som i bokexemplet och redgierade det sen till att funka med mina användare.
+
+DOck hade jag stora problem med BTH databasen när jag skulle använda det på studentservern. Jag kunde inte skapa fler tabeller då MySQL Workshop gav error "too many open files" vilket verkar ha att göra med resurserna på server och vad som finns tillgängligt för min användare (det kom jag fram till genom lite googlande iaf). Jag var tvungen att ta bort tabeller från tidigare kurser för att skapa nya, och även efter det hade jag lite problem. Det gick dock över av sig själv till slut. Detta skapade också problem med sessioner då sidor med sessioner helt slutade att ladda. Det tog väldigt lång tid att felsöka och försöka fixa och därför har jag blivit mycket försenad nu.
+
+### Berätta om din syn på Active record och liknande upplägg, ser du fördelar och nackdelar?
+
+Just active record verkar riktigt bra. Det blev så mycket lättare att prata med databasen. Med just det vi använde för databashanteringen var det lite klurigt att uppdatera en kolumn i databasen. Jag fick aldrig riktigt till det så jag kunde enbart uppdaterna en kolumn utan jag fick hämta datan som redan fanns på raden och använda den igen där datan inte skulle uppdateras. Kanske missade något men det verkar som en konstigt sätt att göra det på, när man vanligtvis bara kan göra UPDATE.
+
+### Utveckla din syn på koden du nu har i ramverket och din kommentars- och användarkod. Hur känns det?
+
+Hade nog kunnat bli bättre vid det här laget. Detta kursmomentet kändes lite som oophp då vi t.ex. skulle integrera crud för både böckerna och användarna (att göra crud är extremt tråkigt, även när man kan scaffolda fram stor del av koden). Jag tror vi had klarat det utan att integrera bokexemplet i me-sidan - för jag ser ingen anledning att ha det där. Det räcker ju med crud för användarna för att se om vi gjort den delen rätt? Nu fick vi göra samma sak tre gånger. En gång för övningen och två för me-sidan. Det är mycket crud i ett kursmoment.
+
+På grund av detta då tillsammans med databasproblemen jag hade fick koden lida lite och jag hade inte tid att snygga till och organisera den på ett bra sätt. Koden för kommentererna känns ganska okej, koden för användare/profil mindre så.
+
+Jag hade gärna skapat några mer avancerade vyer för att få allt att se bättre ut. Men det får kanske bli i kommande kursmoment.
+
+Annars ser man en klar förbättring i koden i allmänhet medans vi jobbar oss framåt i kursen. Den är bättre nu än den var från början iaf.
+
+### Om du vill, och har kunskap om, kan du även berätta om din syn på ORM och designmönstret Data Mapper som är närbesläktade med Active Record. Du kanske har erfarenhet av likande upplägg i andra sammanhang?
+
+Jag har lite erfarenhet från oopython kursen då vi använde oss av SQLAlchemy vilket jag verkligen tyckte om. Kommunikationen med databasen blir mycket mer lätthanterlig och man får bättre koll på den i allmänhet.
+
+Men vad exakt som är skillnaden på dessa deisngmönser är inget jag har speciellt bra koll på.
+
+### Vad tror du om begreppet scaffolding, kan det vara något att kika mer på?
+
+Det är ett riktigt bra sätt att komma igång med ett nytt projekt. Man kanske måste ändra en hel del i det man scaffoldar fram men det kan oftast vara bättre än att behöva starta från stratch. Man kan spara en hel del tid på att använda det - så det är absolut något jag skulle vilja kika mer på.
+
+PS: Det går att logga in med admin/admin och doe/doe för att testa. Validering ger fortfarande fel på $di (short variable) i vissa mappar. Varför vet jag inte, men jag har gjort dbwebb update och di står med i exceptions i phpmd.
 
 ## Kmom05
 

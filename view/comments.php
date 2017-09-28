@@ -8,4 +8,10 @@
 
 </div>
 
-<?php $di->get("commentsController")->addCommentSection(); ?>
+<?php
+
+if ($di->get("session")->get("user") !== null) {
+    $di->get("commentsController")->addCommentSection();
+}
+
+?>

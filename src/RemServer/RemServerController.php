@@ -23,11 +23,6 @@ class RemServerController implements InjectionAwareInterface
      */
     public function anyPrepare()
     {
-        // $rem = $this->di->get("rem");
-        $session = $this->di->get("session");
-
-        $session->start();
-
         if (!$this->di->get("rem")->hasDataset()) {
             $this->di->get("rem")->init();
         }

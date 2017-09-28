@@ -11,25 +11,25 @@ class CommentsController implements InjectionAwareInterface
 
     public function add()
     {
-        $this->di->get("comments")->addComment($_POST);
+        $this->di->get("comments")->addComment($_POST, $this->di->get("db"), $this->di->get("session"));
         $this->di->get("response")->redirect("comments");
     }
 
     public function delete()
     {
-        $this->di->get("comments")->deleteComment($_GET['id']);
+        $this->di->get("comments")->deleteComment($_GET['id'], $this->di->get("db"));
         $this->di->get("response")->redirect("comments");
     }
 
     public function edit()
     {
-        $this->di->get("comments")->editComment($_POST['id'], $_POST['comment']);
+        $this->di->get("comments")->editComment($_POST['id'], $_POST['comment'], $this->di->get("db"));
         $this->di->get("response")->redirect("comments");
     }
 
     public function get($id)
     {
-        return $this->di->get("comments")->getComment($id);
+        return $this->di->get("comments")->getComment($id, $this->di->get("db"));
     }
 
     public function addCommentSection()

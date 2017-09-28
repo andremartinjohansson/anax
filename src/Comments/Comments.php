@@ -2,31 +2,60 @@
 
 namespace Anax\Comments;
 
+use \Anax\Comments\Comment;
+
 class Comments
 {
 
     private $data = array();
 
-    public function __construct()
-    {
-        session_start();
+    // public function __construct()
+    // {
+    //     // session_start();
+    //     //
+    //     // if (isset($_SESSION['comments']) == true) {
+    //     //     $this->data = $_SESSION['comments'];
+    //     // }
+    //
+    // }
 
-        if (isset($_SESSION['comments']) == true) {
-            $this->data = $_SESSION['comments'];
+    public function init($db)
+    {
+        $comment = new Comment();
+        $comment->setDb($db);
+
+        $allComments = $comment->findAll();
+        foreach ($allComments as $comment) {
+            // var_dump($comment->author);
+            $input = array(
+                'id' => $comment->id,
+                'article' => $comment->article,
+                'author' => $comment->author,
+                'email' => $comment->email,
+                'comment' => $comment->comment);
+
+            array_push($this->data, $input);
         }
+
+        // var_dump($_SESSION);
     }
 
-    public function getComment($id)
+    public function getComment($id, $db)
     {
-        foreach ($this->data as $comment) {
-            if ($comment['id'] == $id) {
-                $text = $comment['comment'];
-            } else {
-                $text = "";
-            }
-        }
+        // foreach ($this->data as $comment) {
+        //     if ($comment['id'] == $id) {
+        //         $content = $comment;
+        //     } else {
+        //         $content = "";
+        //     }
+        // }
         // var_dump($text);
-        return $text;
+
+        $comment = new Comment();
+        $comment->setDb($db);
+        $content = $comment->find("id", $id);
+
+        return $content;
     }
 
     public function getAllComments()
@@ -35,52 +64,90 @@ class Comments
         return $this->data;
     }
 
-    public function addComment($vars)
+    public function addComment($vars, $db, $session)
     {
+        $user = $session->get("user");
+
         $input = array(
             'id' => $vars['id'],
-            'article_id' => $vars['article'],
-            'comment_author' => $vars['comment_author'],
-            'email' => $vars['email'],
+            'article' => $vars['article'],
+            'author' => $user["name"],
+            'email' => $user["email"],
             'comment' => $vars['comment']);
 
         $input['id'] = count($this->data);
 
         array_push($this->data, $input);
-        $this->sync();
+        // $this->sync();
+
+        $comment = new Comment();
+        $comment->setDb($db);
+        $comment->article = $input['article'];
+        $comment->author = $user["name"];
+        $comment->email = $user["email"];
+        $comment->comment = $input['comment'];
+        // var_dump($comment);
+        // die();
+        $comment->save();
     }
 
-    public function deleteComment($id)
+    public function deleteComment($id, $db)
     {
-        foreach ($this->data as $comment) {
-            if ($comment['id'] == $id) {
-                unset($this->data[$id]);
-                $this->sync();
-            }
-        }
+        // foreach ($this->data as $comment) {
+        //     if ($comment['id'] == $id) {
+        //         unset($this->data[$id]);
+        //         $this->sync();
+        //     }
+        // }
+
+        $comment = new Comment();
+        $comment->setDb($db);
+        $comment = $comment->find("id", $id);
+        $comment->delete();
     }
 
-    public function editComment($id, $text)
+    public function editComment($id, $text, $db)
     {
-        $this->data[$id]['comment'] = $text;
-        // var_dump($this->data[$id]);
-        $this->sync();
+        // $this->data[$id]['comment'] = $text;
+        // // var_dump($this->data[$id]);
+        // $this->sync();
+
+        $comment = new Comment();
+        $comment->setDb($db);
+        $old = $comment->find("id", $id);
+        $comment->article = $old->article;
+        $comment->author = $old->author;
+        $comment->email = $old->email;
+        $comment->comment = $text;
+        $comment->save();
     }
 
     public function commentSection($post, $del, $edt)
     {
         $comments = $this->getAllComments();
 
+        // var_dump($this->data);
+
         $htmlSection = "";
 
         foreach ($comments as $comment) {
-            $author = $comment['comment_author'];
+            $author = $comment['author'];
             $content = $this->bbcode2html($comment['comment']);
-            $delete = $del . "?id=" . $comment['id'];
-            $edit = $edt . "?id=" . $comment['id'];
+            $emailHash = md5(strtolower(trim($comment['email'])));
+            if ($_SESSION["user"]["name"] == $author) {
+                $delete = "<p><a href='" . $del . "?id=" . $comment['id'] . "'>Ta bort</a></p>";
+                $edit = "<p><a href='" . $edt . "?id=" . $comment['id'] . "'>Redigera</a></p>";
+            } elseif ($_SESSION["user"]["role"] == "admin") {
+                $delete = "<p><a href='" . $del . "?id=" . $comment['id'] . "'>Ta bort</a></p>";
+                $edit = "<p><a href='" . $edt . "?id=" . $comment['id'] . "'>Redigera</a></p>";
+            } else {
+                $delete = "";
+                $edit = "";
+            }
             $htmlSection .=
                 <<<EOD
                 <div class="comment">
+                <img class="avatar" src="https://www.gravatar.com/avatar/{$emailHash}?s=100&amp;d=http%3A%2F%2Fi.imgur.com%2FCrOKsOd.png" alt="gravatar">
                 <address class="vcard author">
                 Av <em>{$author}</em>
                 </address>
@@ -89,8 +156,8 @@ class Comments
                 {$content}
                 </div>
                 <div class="comment-actions">
-                <p><a href="{$edit}">Redigera</a></p>
-                <p><a href="{$delete}">Ta bort</a></p>
+                {$edit}
+                {$delete}
                 </div>
                 </article>
                 </div>
@@ -102,10 +169,9 @@ EOD;
             <div class="leave-comment">
             <h3>Skriv en kommentar</h3>
             <form action="{$post}" method="post">
-            <input type="hidden" name="comment_author" value="Anonymous">
+            <input type="hidden" name="author" value="Anonymous">
             <div class="compose-comment">
             <textarea class="comment-text" name="comment" required="required"></textarea>
-            <input class="comment-email" type="email" name="email" value="" required="required" placeholder="Email">
             </div>
             <input class="comment-post" name="submit" type="submit" value="Posta">
             </form>
@@ -114,10 +180,10 @@ EOD;
         echo $htmlSection;
     }
 
-    private function sync()
-    {
-        $_SESSION['comments'] = $this->data;
-    }
+    // private function sync()
+    // {
+    //     // $_SESSION['comments'] = $this->data;
+    // }
 
     private function bbcode2html($bbtext)
     {

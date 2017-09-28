@@ -16,7 +16,12 @@ return [
         ],
         "response" => [
             "shared" => true,
-            "callback" => "\Anax\Response\Response",
+            //"callback" => "\Anax\Response\Response",
+            "callback" => function () {
+                $obj = new \Anax\Response\ResponseUtility();
+                $obj->setDI($this);
+                return $obj;
+            }
         ],
         "url" => [
             "shared" => true,
@@ -72,6 +77,7 @@ return [
             "callback" => function () {
                 $session = new \Anax\Session\SessionConfigurable();
                 $session->configure("session.php");
+                $session->start();
                 return $session;
             }
         ],
@@ -132,6 +138,7 @@ return [
             "shared" => true,
             "callback" => function () {
                 $comments = new \Anax\Comments\Comments();
+                $comments->init($this->get("db"));
                 return $comments;
             }
         ],
@@ -141,6 +148,38 @@ return [
                 $commentsController = new \Anax\Comments\CommentsController();
                 $commentsController->setDI($this);
                 return $commentsController;
+            }
+        ],
+        "userController" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Anax\User\UserController();
+                $obj->setDI($this);
+                return $obj;
+            }
+        ],
+        "db" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Anax\Database\DatabaseQueryBuilder();
+                $obj->configure("database.php");
+                return $obj;
+            }
+        ],
+        "bookController" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Anax\Book\BookController();
+                $obj->setDI($this);
+                return $obj;
+            }
+        ],
+        "adminController" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Anax\Admin\AdminController();
+                $obj->setDI($this);
+                return $obj;
             }
         ],
     ],

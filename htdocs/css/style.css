@@ -120,6 +120,7 @@ body {
 .vcard.author {
   border-bottom: 1px solid lightgray;
   padding: 5px;
+  margin-left: 100px;
 }
 .entry-content {
   margin: 20px;
@@ -176,4 +177,58 @@ body {
 }
 .comment-actions p {
   display: inline;
+}
+.avatar {
+  float: left;
+  width: 60px;
+  margin: 20px;
+}
+.header-title {
+  display: inline-block;
+}
+.user-actions {
+  display: inline-block;
+  float: right;
+  margin-right: 20px;
+}
+.user-actions a {
+  color: white;
+  text-decoration: none;
+  padding: 5px;
+}
+.user-actions a:hover {
+  color: #026FCA;
+}
+.standard-form {
+  padding: 20px;
+  width: 25%;
+  text-align: center;
+  margin: 0 auto;
+}
+.standard-input {
+  font-size: 14px;
+  padding: 5px;
+}
+.standard-button {
+  font-size: 14px;
+  background-color: #026fca;
+  border: none;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+}
+.profile-pic {
+  width: 200px;
+}
+.info {
+  font-size: 12px;
+}
+.profile {
+  width: 50%;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+.profile-links {
+  font-size: 18px;
 }
