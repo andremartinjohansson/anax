@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3dbc552ae03727e237d12496725edef5",
+    "content-hash": "a4cca07a7f0790a526594b56abf0dbdb",
     "packages": [
         {
             "name": "anax/common",
@@ -652,6 +652,63 @@
                 "mvc"
             ],
             "time": "2017-09-14T16:01:08+00:00"
+        },
+        {
+            "name": "andymartinj/comments",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/andymartinj/comments.git",
+                "reference": "f0a0d9fb4a7607afff39f95cca2108dd991b6aa9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/andymartinj/comments/zipball/f0a0d9fb4a7607afff39f95cca2108dd991b6aa9",
+                "reference": "f0a0d9fb4a7607afff39f95cca2108dd991b6aa9",
+                "shasum": ""
+            },
+            "require": {
+                "anax/configure": "^1.0",
+                "anax/database": "^1.1",
+                "anax/di": "^1.0",
+                "anax/page": "^1.0",
+                "anax/request": "^1.0",
+                "anax/response": "^1.0",
+                "anax/router": "^1.0",
+                "anax/session": "^1.0",
+                "anax/textfilter": "^1.0",
+                "anax/url": "^1.0",
+                "anax/view": "^1.0",
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Anax\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andre Johansson",
+                    "email": "anjd16@student.bth.se",
+                    "homepage": "https://dbwebb.se",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Anax comments module.",
+            "homepage": "https://dbwebb.se/anax",
+            "keywords": [
+                "boilerplate",
+                "education",
+                "framework",
+                "micro",
+                "mvc"
+            ],
+            "time": "2017-10-05T18:59:17+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",

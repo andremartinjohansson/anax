@@ -157,6 +157,34 @@ PS: Det går att logga in med admin/admin och doe/doe för att testa. Validering
 
 ## Kmom05
 
+### Hur gick arbetet med att lyfta ut koden ur me-sidan och placera i en egen modul?
+
+Jo, själva biten att lyfta ut koden gick ju bra. Kändes som att mitt kommentarssystem var hyfsat väl förberett för att flyttas ut som en självstående modul. Visste dock inte riktigt om jag skulle ta med user and admin klasserna eller inte. Vid det här laget är ju modulen ganska beroende av att det finns ett system för användare, även om jag enbart använder session när det gäller den biten i systemet (så man hade kunnat använda ett separat användarsystem, men då måste datan som jag tar från sessionen vara exakt samma...). Vet inte riktigt vad som var meningen där men jag tog med dem iaf.
+
+### Flöt det på bra med GitHub och kopplingen till Packagist?
+
+Japp, inga större problem. Det var faktiskt lättare än vad jag trodde. Blev dock lite förvirrad när det gällde tokens. Behövde först en token från Github för att göra någonting, sen när jag behövde en token för Packagist visste jag inte riktigt vilken jag skulle använda. Ja, tills jag hittade ett sätt att generera en token på Packagist...
+
+Men I allmänhet tyckte jag artiklen var förvirrande och inte helt tydlig i vissa delar.
+
+### Hur gick det att åter installera modulen i din me-sida med composer, kunde du följa du din installationsmanual?
+
+Det gick bra för det mesta. Installerade först i min nya dev mapp och sen tog jag bort filerna på me-sidan och testade att hämta de nya med composer. Det gick bra förutom när jag råkade tagga innan en commit och composer hämtade hem fel grejer hehe.
+
+Jag hade gjort lite ändringar i min modul så behöver committa och tagga fler gånger för att få det att bli bra i me-sidan. Men med hjälp av min readme funkade det sen.
+
+### Hur väl lyckas du enhetstesta din modul och hur mycket kodtäckning fick du med?
+
+Nja, det blev lite klurigt där. Jag ville göra tester på min kontroller-klass (för kommentarssystemet) men jag fick aldrig det att funka med di. Känns som jag testade allting men fick aldrig rätt på det. Så jag slösade all min tid där innan jag gav upp och gick vidare till min Comments klass. Där uppnådde jag 87.5%. Jag gjorde också tester på min Filter-klass som är min egna klass för omvandling av bbcode till html. Där blev det 100% då den var väldigt enkel.
+
+Det var de två jag gjorde tester på. Lite klurigt då kommentarssystemet hela tiden jobbar mot databasen. Det löste jag genom att skapa en sqlite databas med de tables som jag har i me-sidan, så jag kunde köra testerna med den. Behövde dock köra apache för att den skulle ansluta till databasen.
+
+Den största irritationen jag har med många verktyg vi använder är att jag får en hel hög med errors bara för att jag kör från en path som har "André" i den. Det är mitt användarnamn på datorn och dbwebb-kurserna ligger under den. Förstår inte varför phpunit över huvudtaget bryr sig om pathen har UTF-8 karaktärer eller inte. Gör det väldigt tråkigt att göra enhetstester dock.
+
+### Några reflektioner över skillnaden med och utan modul?
+
+Det är ju precis samma kod så egentligen är det ingen skillnad alls. Men jag gillar när jag sitter och bugfixar lite så jobbar jag med modulen och inte i me-sidan - det känns bättre och mer hanterligt. Lättare att underhålla koden.
+
 ## Kmom06
 
 ## Kmom07/10
