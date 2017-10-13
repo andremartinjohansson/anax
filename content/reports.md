@@ -187,4 +187,45 @@ Det är ju precis samma kod så egentligen är det ingen skillnad alls. Men jag 
 
 ## Kmom06
 
+### Har du någon erfarenhet av automatiserade testar och CI sedan tidigare?
+
+Förutom det jag har stött på genom dbwebb har jag ingen erfarnhet alls
+av detta. Jag tyckte dock det var intressant att se resultaten från de
+automatiserade testerna, speciellt scrutinizer.
+
+Dock lite drygt att testerna körs först efter man gjort en commit på Github.
+Om något blir fel måste jag ändra det och göra en commit igen. Visst, kanske
+därför man har phpunit lokalt så man kan testa där. Men då finns det lite anledning till att köra t.ex. Travis förutom att få en badge att lägga i sin
+readme. Scrutinizer är lite mer användbart då man får kod kvalité och täckning också.
+
+### Hur ser du på begreppen, bra, onödigt, nödvändigt, tidskrävande?
+
+Jag ser automatiserade tester som en bra grej men så vi har gjort det har
+varit mycket frustrerande tycker jag. Man behöver tänka på testerna mycket tidigare, så när man utvecklar hela tiden tänker på att göra testbar kod.
+Så vi ar jobbat har gjort det mycket svårt att skriva testbra kod från början.
+
+Dessutom tycker jag det har varit mycket svårt att får rätt på testerna då
+många funktioner använder sånt som ligger nere i ramverket, och resultatet blir att det helt enkelt inte funkar när man kör phpunit. T.ex. vid användning av ramverkets "view", får jag en error med phpunit som kommer från
+ViewHelperFunctions.php. Det känns som att det inte går att fixa då modulen
+ska fungera med de dependencies som composer laddar ner, inte det jag möjligtvis kan fixa i view modulen.
+
+Då verkar det som att jag inte kan använda view i mina klasser, eller så får jag helt enkelt strunta i att göra tester på den klassen? Jag vet inte, det känns väldigt rörigt att få ramverkets funktioner att fungera korrekt med phpunit, vilket gjorde det frustrerande och mycket tidskrävande.
+
+### Hur stor kodtäckning lyckades du uppnå i din modul?
+
+Efter jag tog bort mina user klasser (då de bara skapade problem och jag kunde knappt testa dem alls då de använder funktioner från ramverket, eller andra moduler), kom jag upp i 90% kodtäckning på min kommentarsmodul. Den kod som
+inte är testad ligger i min kontroller-klass. Den koden innehåller bland annat redirects och pagerender. Vi får ju inte lägga denna koden i routerna så därför ligger den i kontroller-klassen, och då blir den koden ej testbar. Inte mycket att göra åt det.
+
+Jag fick iaf det att testa stor del av koden  med hjälp av en sqlite databas.
+
+### Berätta hur det gick att integrera mot de olika externa tjänsterna?
+
+Det var inga problem alls. Gick smidigt och lätt. Efter kmom05 kändes det som att modulen var väl föreberedd för detta. Det var bara att ansluta tjänsterna och sen funkade det.
+
+### Vilken extern tjänst uppskattade du mest, eller har du förslag på ytterligare externa tjänster att använda?
+
+Scrutinizer var absolut den tjänst som gav mest, och den jag gillade mest. Där får man build status, kodkvalité och kodtäckning i samma. De andra gav bara en av dessa. Så varför använda flera olika tjänster när man bara behöver en?
+
+Tyckte också att webbsidan för scrutinizer var väldigt snygg och bra. Man får direkt bra feedback på sin kod. Riktigt bra tyckte jag.
+
 ## Kmom07/10

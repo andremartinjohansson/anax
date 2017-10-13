@@ -16,7 +16,7 @@
         "anax/page": "^1.0",
         "anax/htmlform": "^1.0",
         "anax/database": "^1.1",
-        "andymartinj/comments": "^1.1"
+        "andymartinj/comments": "^1.2"
     },
     "autoload": {
         "psr-4": {"Anax\\": "src/"}
